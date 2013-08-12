@@ -1,5 +1,23 @@
 <?php
 
+/*
+ * Psearch [A journey always starts with the first step]
+ *
+ * @copyright Copyright (C) 2013 wine.cn All rights reserved.
+ * @license http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+
+//----------------------------------------------------------------
+
+defined("ROOT_IN") || die("Access Denied");
+
+/**
+ * 命令行执行初始化系统设置核心模块
+ *
+ * @author   <mengfk@eswine.com>
+ * @since    1.0
+ */
+
 namespace Psearch\Inc;
 
 class Cli {
