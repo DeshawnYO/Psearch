@@ -15,7 +15,10 @@
  * @author   <mengfk@eswine.com>
  * @since    1.0
  */
-define("ROOT_IN", true);
+
+if(version_compare(PHP_VERSION,'5.3.0','<') ) {
+    die('require PHP 5.3+');
+}
 define("ROOT", dirname(__FILE__));
 include ROOT.'/Inc/AutoLoad.Inc.php';
 \Psearch\Inc\Core::getInstance()->run();
