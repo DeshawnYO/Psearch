@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Psearch [A journey always starts with the first step]
- *
- * @copyright Copyright (C) 2013 wine.cn All rights reserved.
- * @license http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-//----------------------------------------------------------------
-
-/**
- * 错误处理类
- *
- * @author   <mengfk@eswine.com>
- * @since    1.0
- */
-
-namespace Psearch\Inc;
-
 class Error {
 
     /**
@@ -45,6 +27,7 @@ class Error {
     }
 
     static function showException($message) {
-        die("Error: {$message}");
+        header('HTTP/1.1 500 Internal Server Error');
+        die("[".date(DATE_ATOM, time())."] [Error] '{$message}'");
     }
 }

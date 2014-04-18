@@ -1,25 +1,5 @@
 <?php
 
-/*
- * Psearch [A journey always starts with the first step]
- *
- * @copyright Copyright (C) 2013 wine.cn All rights reserved.
- * @license http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-//----------------------------------------------------------------
-
-/**
- * 程序运行核心支持文件
- *
- * 进行参数过滤,路由转发,module初始化等
- *
- * @author   <mengfk@eswine.com>
- * @since    1.0
- */
-
-namespace Psearch\Inc;
-
 class Core {
 
     private static $obj = NULL;
@@ -36,7 +16,7 @@ class Core {
     public function run() {
         $this->init();
         $json = $this->filterParam();
-        new \Psearch\Inc\Module($this->getParam($json));
+        new Module($this->getParam($json));
     }
 
     public function init() {
@@ -46,13 +26,13 @@ class Core {
         if(function_exists('date_default_timezone_set')) {
             @date_default_timezone_set("Etc/GMT-8");
         }
-        if(function_exists('ob_gzhandler') && \Psearch\Inc\Config::$gzip) {
+        if(function_exists('ob_gzhandler') && Config::$gzip) {
             ob_start('ob_gzhandler');
         } else {
             ob_start();
         }
         ob_implicit_flush(0);
-        \Psearch\Inc\View::outHeader();
+        View::outHeader();
     }
 
     public function filterParam() {
@@ -62,7 +42,7 @@ class Core {
         if($json) {
             return $json;
         } else {
-            \Psearch\Inc\Error::showError("POST DATA EMPTY", 1001);
+            Error::showError("POST DATA EMPTY", 1001);
         }
     }
 

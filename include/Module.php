@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Psearch [A journey always starts with the first step]
- *
- * @copyright Copyright (C) 2013 wine.cn All rights reserved.
- * @license http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-//----------------------------------------------------------------
-
-/**
- * Module核心类
- *
- * @author   <mengfk@eswine.com>
- * @since    1.0
- */
-
-namespace Psearch\Inc;
-
 class Module {
 
     var $db;
@@ -41,7 +23,7 @@ class Module {
     var $sphinx;
 
     public function __construct($param) {
-        $this->db = new \Psearch\Inc\DbMysql(\Psearch\Inc\Config::$db);
+        $this->db = new DbMysql(Config::$db);
         list($this->index, $this->method, $this->key, $this->field, $this->limit, $this->order, $this->keyword, $this->condition) = $param;
         $this->method();
     }
@@ -61,7 +43,7 @@ class Module {
                 $this->find();
                 break;
             default:
-                \Psearch\Inc\Error::showError('Method Empty Or Wrong', 1002);
+                Error::showError('Method Empty Or Wrong', 1002);
         }
     }
 
@@ -78,11 +60,11 @@ class Module {
         $sql = "REPLACE INTO `{$table}`(".implode(",", $field).") VALUES(".implode(',', $value).")";
         $rst = $this->db->execute($sql);
         if(1 === $rst) {
-            \Psearch\Inc\View::output(true, 'Data Insert Succeed');
+            View::output(true, 'Data Insert Succeed');
         } elseif(2 === $rst) {
-            \Psearch\Inc\View::output(true, 'Data Update Succeed');
+            View::output(true, 'Data Update Succeed');
         } else {
-            \Psearch\Inc\Error::showError('Data Insert Error', 1004);
+            Error::showError('Data Insert Error', 1004);
         }
     }
 
@@ -98,11 +80,11 @@ class Module {
         $sql .= " WHERE `id` = {$this->key}";
         $rst = $this->db->execute($sql);
         if(1 === $rst) {
-            \Psearch\Inc\View::output(true, 'Data Update Succeed');
+            View::output(true, 'Data Update Succeed');
         } elseif(0 === $rst) {
-            \Psearch\Inc\View::output(true, 'Data Not Changed');
+            View::output(true, 'Data Not Changed');
         } else {
-            \Psearch\Inc\Error::showError('Data Insert Error', 1005);
+            Error::showError('Data Insert Error', 1005);
         }
     }
 
@@ -111,14 +93,14 @@ class Module {
         $sql = "DELETE FROM `{$table}` WHERE `id` = {$this->key}";
         $rst = $this->db->execute($sql);
         if(1 === $rst) {
-            \Psearch\Inc\View::output(true, 'Data Delete Succeed');
+            View::output(true, 'Data Delete Succeed');
         } elseif(0 === $rst) {
-            \Psearch\Inc\View::output(true, 'No Data Delete');
+            View::output(true, 'No Data Delete');
         }
     }
 
     public function find() {
-        $this->sphinx = new \Psearch\Inc\Sphinx();
+        $this->sphinx = new Sphinx();
         if(empty($this->keyword)) {
             $this->sphinx->setMatchMode(1);
         } else {
@@ -133,24 +115,24 @@ class Module {
         $this->sphinx->setLimits((isset($limit[0]) ? $limit[0]: 1),(isset($limit[1]) ? $limit[1] : 20));
         $rest = $this->sphinx->query($this->keyword, $this->index);
         unset($rest['error'], $rest['warning'], $rest['status'], $rest['fields'], $rest['attrs'], $rest['time']);
-        \Psearch\Inc\View::output($rest);
+        View::output($rest);
     }
 
     public function table() {
         $sql = "SHOW TABLES LIKE '{$this->index}'";
         $rst = $this->db->queryFirst($sql);
         if(!$rst || empty($this->index)) {
-            \Psearch\Inc\Error::showError('Index Table Not Exists', 1003);
+            Error::showError('Index Table Not Exists', 1003);
         }
         return $this->index;
     }
 
     public function field($table) {
         if(empty($this->field)) {
-            \Psearch\Inc\Error::showError('Field Empty', 1005);
+            Error::showError('Field Empty', 1005);
         }
         $newField = array();
-        $index = \Psearch\Inc\Config::$index;
+        $index = Config::$index;
         $cfield = $index[$table];
         foreach($this->field as $k => $v) {
             if(isset($cfield[$k])) {

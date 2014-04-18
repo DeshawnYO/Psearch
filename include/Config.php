@@ -1,25 +1,5 @@
 <?php
 
-/*
- * Psearch [A journey always starts with the first step]
- *
- * @copyright Copyright (C) 2013 wine.cn All rights reserved.
- * @license http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-//----------------------------------------------------------------
-
-/**
- * 配置文件
- * 
- * 详细配置信息请参考Readme https://github.com/dreamans/Psearch
- *
- * @author   <mengfk@eswine.com>
- * @since    1.0
- */
-
-namespace Psearch\Inc;
-
 class Config {
 
     //数据库配置信息,需手动建立数据库

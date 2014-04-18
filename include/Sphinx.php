@@ -1,35 +1,17 @@
 <?php
 
-/*
- * Psearch [A journey always starts with the first step]
- *
- * @copyright Copyright (C) 2013 wine.cn All rights reserved.
- * @license http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-//----------------------------------------------------------------
-
-/**
- * Sphinx操作类
- *
- * @author   <mengfk@eswine.com>
- * @since    1.0
- */
-
-namespace Psearch\Inc;
-
 class Sphinx {
 
     static $sphinx;
 
     public function __construct() {
         if(!class_exists('SphinxClient')) {
-            \Psearch\Error::showError("SphinxClient Not Exists", 3001);
+            Error::showError("SphinxClient Not Exists", 3001);
         }
-        self::$sphinx = new \SphinxClient();
-        self::$sphinx->SetServer(\Psearch\Inc\Config::$sphinx['host'], \Psearch\Inc\Config::$sphinx['port']);
+        self::$sphinx = new SphinxClient();
+        self::$sphinx->SetServer(Config::$sphinx['host'], Config::$sphinx['port']);
         if(!self::$sphinx->open() ) {
-            \Psearch\Inc\Error::showError('Connect to sphinx server failed.', 3002);
+            Error::showError('Connect to sphinx server failed.', 3002);
         }
         self::$sphinx->SetRankingMode(SPH_RANK_BM25);
         self::$sphinx->SetArrayResult(true);
@@ -72,7 +54,7 @@ class Sphinx {
 
     public function query($keyword, $index) {
         if($error = $this->error()) {
-            \Psearch\Inc\Error::showError($error, 3003);
+            Error::showError($error, 3003);
         }
         $index = empty($index) ? '*' : $index;
         return self::$sphinx->query($keyword, $index);

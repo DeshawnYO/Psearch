@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Psearch [A journey always starts with the first step]
- *
- * @copyright Copyright (C) 2013 wine.cn All rights reserved.
- * @license http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-//----------------------------------------------------------------
-
-/**
- * 命令行执行初始化系统设置核心模块
- *
- * @author   <mengfk@eswine.com>
- * @since    1.0
- */
-
-namespace Psearch\Inc;
-
 class Cli {
 
     private static $obj = NULL;
@@ -56,12 +38,12 @@ class Cli {
                 $this->sphinxCfg($index, $indexCfg);
                 break;
             default:
-                \Psearch\Inc\Error::showException("{$op} Operater Not Exists");
+                Error::showException("{$op} Operater Not Exists");
         }
     }
 
     public function initDb($index, $indexCfg, $force) {
-        $db = new \Psearch\Inc\DbMysql(\Psearch\Inc\Config::$db);
+        $db = new DbMysql(\Psearch\Inc\Config::$db);
         $sql = "SHOW TABLES LIKE '{$index}'";
         $rst = $db->queryFirst($sql);
         if($rst) {
@@ -90,8 +72,8 @@ class Cli {
     }
 
     public function sphinxCfg($index, $indexCfg) {
-        $dbCfg = \Psearch\Inc\Config::$db;
-        $charsetPath = \Psearch\Inc\Config::$charsetDictpath;
+        $dbCfg = Config::$db;
+        $charsetPath = Config::$charsetDictpath;
         $path = ROOT."/SphinxCfg/".$index.".sphinx.conf";
         $sqlQuery = "SELECT id , id as keyid ";
         $attrQuery = array();
@@ -134,9 +116,9 @@ class Cli {
     }
 
     public function checkIndexExists($index) {
-        $cfg = \Psearch\Inc\Config::$index;
+        $cfg = Config::$index;
         if(!isset($cfg[$index])) {
-            \Psearch\Inc\Error::showException("{$index} Config Not  Exists");
+            Error::showException("{$index} Config Not  Exists");
         }
         return $cfg[$index];
     }

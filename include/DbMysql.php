@@ -1,23 +1,5 @@
 <?php
 
-/*
- * Psearch [A journey always starts with the first step]
- *
- * @copyright Copyright (C) 2013 wine.cn All rights reserved.
- * @license http://www.apache.org/licenses/LICENSE-2.0.txt
- */
-
-//----------------------------------------------------------------
-
-/**
- * MySQL数据库操作类
- *
- * @author   <mengfk@eswine.com>
- * @since    1.0
- */
-
-namespace Psearch\Inc;
-
 class DbMysql {
 
     var $dblink;
@@ -32,11 +14,11 @@ class DbMysql {
         if(!$this->dblink || !mysql_ping($this->dblink)) {
             $this->dblink = mysql_connect($this->config['host'].':'.$this->config['port'], $this->config['user'], $this->config['pass']);
             if(!$this->dblink) {
-                \Psearch\Inc\Error::showError('Could not connect: ' . mysql_error(), 2001);
+                Error::showError('Could not connect: ' . mysql_error(), 2001);
             }
             if(!empty($this->config['dbname'])) {
                 if(!mysql_select_db($this->config['dbname'], $this->dblink)) {
-                    \Psearch\Inc\Error::showError('Mysql Database Select Error: ' . mysql_error(), 2002);
+                    Error::showError('Mysql Database Select Error: ' . mysql_error(), 2002);
                 }
             }
             $version = mysql_get_server_info($this->dblink);
@@ -60,7 +42,7 @@ class DbMysql {
             }
             mysql_free_result($query);
         } else {
-            \Psearch\Inc\Error::showError("Mysql Query Error:".mysql_error($this->dblink), 2003);
+            Error::showError("Mysql Query Error:".mysql_error($this->dblink), 2003);
         }   
         return $result;
     }
@@ -69,7 +51,7 @@ class DbMysql {
         $this->connect();
         $result = mysql_query($sql, $this->dblink);
         if($result == false) {
-            \Psearch\Inc\Error::showError("Mysql Execute Error:".mysql_error($this->dblink), 2004);
+            Error::showError("Mysql Execute Error:".mysql_error($this->dblink), 2004);
         } else {
             $numrows = mysql_affected_rows($this->dblink);
             $last_insid = mysql_insert_id($this->dblink);
