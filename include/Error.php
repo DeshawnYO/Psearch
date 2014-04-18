@@ -27,7 +27,6 @@ class Error {
     }
 
     static function showException($message) {
-        header('HTTP/1.1 500 Internal Server Error');
-        die("[".date(DATE_ATOM, time())."] [Error] '{$message}'");
+        die("[Error] '{$message}'\n");
     }
 }

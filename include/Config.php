@@ -4,10 +4,10 @@ class Config {
 
     //数据库配置信息,需手动建立数据库
     static $db = array(
-        'host' => '127.0.0.1',    
-        'user' => 'dbuser',    
-        'dbname' => 'Psearch',
-        'pass' => 'dbpass',    
+        'host' => 'host',    
+        'user' => 'user',
+        'dbname' => 'dbname',
+        'pass' => 'pass',    
         'port' => 3306,    
         'charset' => 'utf8',    
     );

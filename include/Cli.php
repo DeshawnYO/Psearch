@@ -43,7 +43,7 @@ class Cli {
     }
 
     public function initDb($index, $indexCfg, $force) {
-        $db = new DbMysql(\Psearch\Inc\Config::$db);
+        $db = new DbMysql(Config::$db);
         $sql = "SHOW TABLES LIKE '{$index}'";
         $rst = $db->queryFirst($sql);
         if($rst) {
@@ -74,7 +74,7 @@ class Cli {
     public function sphinxCfg($index, $indexCfg) {
         $dbCfg = Config::$db;
         $charsetPath = Config::$charsetDictpath;
-        $path = ROOT."/SphinxCfg/".$index.".sphinx.conf";
+        $path = ROOT."/sphinx/".$index.".sphinx.conf";
         $sqlQuery = "SELECT id , id as keyid ";
         $attrQuery = array();
         $attrQuery[] = "\tsql_attr_uint = keyid";
