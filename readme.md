@@ -20,7 +20,7 @@
 
     ROOT : /home/www/webroot/Psearch
     URL  : http://localhost/Psearch/
-    其中Data, SphinxCfg需要可写权限
+    其中data, sphinx需要可写权限
 
 2.编写配置文件
 
@@ -59,7 +59,7 @@
 
     2)根据生成的MySQL表生成sphinx配置文件片段
         {$PHP_BIN}/php -f {$ROOT}/cli.php sphinx winery
-        生成的配置文件片段存在与SphinxCfg/sphinx.winery.conf中,需手动加入到coreseek/sphinx的配置中去
+        生成的配置文件片段存在与sphinx/sphinx.winery.conf中,需手动加入到coreseek/sphinx的配置中去
 
 4.接口使用
 

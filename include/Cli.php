@@ -104,7 +104,7 @@ class Cli {
         $cfg[] = "}";
         $cfg[] = "index {$index}{";
         $cfg[] = "\tsource = {$index}";
-        $cfg[] = "\tpath = ".ROOT."/Data/{$index}";
+        $cfg[] = "\tpath = ".ROOT."/data/{$index}";
         $cfg[] = "\tdocinfo = extern";
         $cfg[] = "\tcharset_type = zh_cn.utf-8";
         $cfg[] = "\tcharset_dictpath = ".$charsetPath;
